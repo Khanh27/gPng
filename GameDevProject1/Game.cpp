@@ -5,6 +5,8 @@
 Game::Game() 
 	:window(nullptr)
 	,isRunning(true)
+	{
+	}
 
 
 
