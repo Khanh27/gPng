@@ -18,5 +18,5 @@ class Game {
 		void GenerateOutput();
 
 		SDL_Window* mWindow;
-		bool mIsRunning
+		bool mIsRunning;
 };
