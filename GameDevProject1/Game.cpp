@@ -2,10 +2,11 @@
 
 #include <iostream>
 
-Game::Game() {
-	bool isRunning = true;
-	SDL_Window* window = nullptr;
-}
+Game::Game() 
+	:window(nullptr)
+	,isRunning(true)
+
+
 
 bool Game::Initialize() {
 	int sdlResult = SDL_Init(SDL_INIT_VIDEO);
