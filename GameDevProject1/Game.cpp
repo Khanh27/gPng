@@ -46,3 +46,13 @@ void Game::runGameLoop() {
 		generateOutputs();
 	}
 }
+
+void processInputs() {
+
+}
+void updateGame() {
+
+}
+void generateOutputs() {
+
+}
