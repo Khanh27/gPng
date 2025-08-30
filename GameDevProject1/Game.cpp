@@ -28,6 +28,18 @@ bool Game::Initialize() {
 		return false;
 	}
 
-
 	return true;
+}
+
+void Game::Shutdown() {
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+}
+
+void Game::runGameLoop() {
+	while (isRunning) {
+		processInputs();
+		updateGame();
+		generateOutputs();
+	}
 }
