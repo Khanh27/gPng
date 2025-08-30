@@ -5,6 +5,7 @@
 Game::Game() 
 	:window(nullptr)
 	,isRunning(true)
+	,renderer(nullptr)
 	{
 	}
 
@@ -31,11 +32,23 @@ bool Game::Initialize() {
 		return false;
 	}
 
+	renderer = SDL_CreateRenderer(
+		window,
+		-1,
+		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+	);
+
+	if (!renderer) {
+		SDL_Log("Failed to create renderer: %s", SDL_GetError());
+		return false; 
+	}
+
 	return true;
 }
 
 void Game::Shutdown() {
 	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
 

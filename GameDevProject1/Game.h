@@ -17,5 +17,6 @@ class Game {
 		void generateOutputs();
 
 		SDL_Window* window;
+		SDL_Renderer* renderer;
 		bool isRunning;
 };
