@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <stdio.h>
 
 
 class Game {
@@ -7,16 +8,14 @@ class Game {
 		Game();
 
 		bool Initialize();
-
-		void runLoop();
-
-		void shutDown();
+		void runGameLoop();
+		void Shutdown();
 
 	private:
-		void processInput();
+		void processInputs();
 		void updateGame();
-		void GenerateOutput();
+		void generateOutputs();
 
-		SDL_Window* mWindow;
-		bool mIsRunning;
+		SDL_Window* window;
+		bool isRunning;
 };
