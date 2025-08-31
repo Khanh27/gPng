@@ -25,5 +25,6 @@ class Game {
 		bool isRunning;
 		Vector2 mPaddlePos;
 		Vector2 mBallPos;
+		Uint32 mTicksCount;
 
 };

@@ -6,8 +6,9 @@ Game::Game()
 	:window(nullptr)
 	, isRunning(true)
 	, renderer(nullptr)
-	, mPaddlePos({50.0f, 300.0f})
-	,mBallPos({400.0f, 300.0f})
+	, mPaddlePos({ 50.0f, 300.0f })
+	, mBallPos({ 400.0f, 300.0f })
+	, mTicksCount(0)
 	{
 	}
 
@@ -78,6 +79,8 @@ void Game::processInputs() {
 	}
 }
 void Game::updateGame() {
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+	mTicksCount = SDL_GetTicks();
 
 }
 void Game::generateOutputs() {
