@@ -26,5 +26,6 @@ class Game {
 		Vector2 mPaddlePos;
 		Vector2 mBallPos;
 		Uint32 mTicksCount;
+		int mPaddleDir;
 
 };

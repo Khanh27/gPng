@@ -9,6 +9,7 @@ Game::Game()
 	, mPaddlePos({ 50.0f, 300.0f })
 	, mBallPos({ 400.0f, 300.0f })
 	, mTicksCount(0)
+	, mPaddleDir(0)
 	{
 	}
 
@@ -24,8 +25,8 @@ bool Game::Initialize() {
 		"pong game",
 		100,
 		100,
-		800,
-		600,
+		800, //width
+		600, //height
 		SDL_WINDOW_RESIZABLE
 	);
 
@@ -77,6 +78,15 @@ void Game::processInputs() {
 	if (state[SDL_SCANCODE_ESCAPE]) {
 		isRunning = false;
 	}
+
+	mPaddleDir = 0;
+	if (state[SDL_SCANCODE_W]) {
+		mPaddleDir -= 1;
+	}
+
+	if (state[SDL_SCANCODE_S]) {
+		mPaddleDir += 1;
+	}
 }
 void Game::updateGame() {
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
@@ -88,7 +98,17 @@ void Game::updateGame() {
 
 	mTicksCount = SDL_GetTicks();
 
+	if (mPaddleDir != 0) {
+		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
 
+		if (mPaddlePos.y < 90.0f) {  // 15 + 75
+			mPaddlePos.y = 90.0f;
+		}
+		
+		else if (mPaddlePos.y > 510.0f) {  // 585 - 75
+			mPaddlePos.y = 510.0f;
+		}
+	}
 
 }
 void Game::generateOutputs() {
