@@ -2,10 +2,12 @@
 
 #include <iostream>
 
-Game::Game() 
+Game::Game()
 	:window(nullptr)
-	,isRunning(true)
-	,renderer(nullptr)
+	, isRunning(true)
+	, renderer(nullptr)
+	, mPaddlePos({50.0f, 300.0f})
+	,mBallPos({400.0f, 300.0f})
 	{
 	}
 
@@ -101,11 +103,21 @@ void Game::generateOutputs() {
 	wall.h = 600;
 	SDL_RenderFillRect(renderer, &wall);
 
-	wall.x = 0;
-	wall.y = 0;
-	wall.w = 15;
-	wall.h = 600;
-	SDL_RenderFillRect(renderer, &wall);
+	SDL_Rect ball{
+		static_cast<int>(mBallPos.x - 15 / 2),
+		static_cast<int>(mBallPos.y - 15 / 2),
+		15,
+		15
+	};
+	SDL_RenderFillRect(renderer, &ball);
+
+	SDL_Rect paddle{
+		0,
+		static_cast<int>(mPaddlePos.y - 150 / 2),
+		15,
+		150
+	};
+	SDL_RenderFillRect(renderer, &paddle);
 
 	SDL_RenderPresent(renderer);
 

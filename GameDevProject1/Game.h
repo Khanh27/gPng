@@ -2,6 +2,10 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
+struct Vector2 {
+	float x;
+	float y;
+};
 
 class Game {
 	public:
@@ -19,4 +23,7 @@ class Game {
 		SDL_Window* window;
 		SDL_Renderer* renderer;
 		bool isRunning;
+		Vector2 mPaddlePos;
+		Vector2 mBallPos;
+
 };
