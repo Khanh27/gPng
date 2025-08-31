@@ -79,8 +79,16 @@ void Game::processInputs() {
 	}
 }
 void Game::updateGame() {
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+
+	if (deltaTime > 0.5f) {
+		deltaTime = 0.5f;
+	}
+
 	mTicksCount = SDL_GetTicks();
+
+
 
 }
 void Game::generateOutputs() {
