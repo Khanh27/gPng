@@ -87,14 +87,25 @@ void Game::generateOutputs() {
 	SDL_Rect wall{
 		0,
 		0,
-		1024,
-		15
+		800, //width
+		15 //height
 	};
 	SDL_RenderFillRect(renderer, &wall);
 
 	wall.y = 600 - 15;
 	SDL_RenderFillRect(renderer, &wall);
 
+	wall.x = 800 - 15;
+	wall.y = 0;
+	wall.w = 15;
+	wall.h = 600;
+	SDL_RenderFillRect(renderer, &wall);
+
+	wall.x = 0;
+	wall.y = 0;
+	wall.w = 15;
+	wall.h = 600;
+	SDL_RenderFillRect(renderer, &wall);
 
 	SDL_RenderPresent(renderer);
 
