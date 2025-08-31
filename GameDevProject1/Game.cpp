@@ -82,7 +82,19 @@ void Game::generateOutputs() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 	SDL_RenderClear(renderer); 
 
-	//draw steps
+	//draw
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_Rect wall{
+		0,
+		0,
+		1024,
+		15
+	};
+	SDL_RenderFillRect(renderer, &wall);
+
+	wall.y = 600 - 15;
+	SDL_RenderFillRect(renderer, &wall);
+
 
 	SDL_RenderPresent(renderer);
 
