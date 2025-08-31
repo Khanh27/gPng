@@ -10,7 +10,6 @@ Game::Game()
 	}
 
 
-
 bool Game::Initialize() {
 	int sdlResult = SDL_Init(SDL_INIT_VIDEO);
 	if (sdlResult != 0) {
@@ -80,5 +79,11 @@ void Game::updateGame() {
 
 }
 void Game::generateOutputs() {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+	SDL_RenderClear(renderer); 
+
+	//draw steps
+
+	SDL_RenderPresent(renderer);
 
 }
