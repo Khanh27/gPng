@@ -10,6 +10,7 @@ Game::Game()
 	, mBallPos({ 400.0f, 300.0f })
 	, mTicksCount(0)
 	, mPaddleDir(0)
+	, mBallVel({ -200.0f, 235.0f })
 	{
 	}
 
@@ -109,6 +110,27 @@ void Game::updateGame() {
 			mPaddlePos.y = 510.0f;
 		}
 	}
+
+	mBallPos.x += mBallVel.x * deltaTime;
+	mBallPos.y += mBallVel.y * deltaTime;
+
+	if (mBallPos.y <= 15 && mBallVel.y < 0.0f) {
+		mBallVel.y *= -1;
+	}
+
+	if (mBallPos.y >= 585 && mBallVel.y > 0.0f) {
+		mBallVel.y *= -1;
+	}
+
+	if (mBallPos.x >= 785 && mBallVel.x > 0.0f) {
+		mBallVel.x *= -1;
+	}
+
+	float diff = abs(mBallPos.y - mPaddlePos.y);
+	if (diff <= 150 / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && mBallVel.x < 0.0f) {
+		mBallVel.x *= -1;
+	}
+
 
 }
 void Game::generateOutputs() {
