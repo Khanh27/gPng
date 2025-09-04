@@ -7,9 +7,11 @@ Game::Game()
 	, isRunning(true)
 	, renderer(nullptr)
 	, mPaddlePos({ 50.0f, 300.0f })
+	, mPaddle2Pos({ 50.0f, 300.0f })
 	, mBallPos({ 400.0f, 300.0f })
 	, mTicksCount(0)
 	, mPaddleDir(0)
+	, mPaddle2Dir(0)
 	, mBallVel({ -200.0f, 235.0f })
 	{
 	}
@@ -88,6 +90,15 @@ void Game::processInputs() {
 	if (state[SDL_SCANCODE_S]) {
 		mPaddleDir += 1;
 	}
+
+	mPaddle2Dir = 0;
+	if (state[SDL_SCANCODE_I]) {
+		mPaddle2Dir -= 1;
+	}
+
+	if (state[SDL_SCANCODE_K]) {
+		mPaddle2Dir += 1;
+	}
 }
 void Game::updateGame() {
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
@@ -111,6 +122,18 @@ void Game::updateGame() {
 		}
 	}
 
+	if (mPaddle2Dir != 0) {
+		mPaddle2Pos.y += mPaddle2Dir * 300.0f * deltaTime;
+
+		if (mPaddle2Pos.y < 90.0f) {  // 15 + 75
+			mPaddle2Pos.y = 90.0f;
+		}
+
+		else if (mPaddle2Pos.y > 510.0f) {  // 585 - 75
+			mPaddle2Pos.y = 510.0f;
+		}
+	}
+
 	mBallPos.x += mBallVel.x * deltaTime;
 	mBallPos.y += mBallVel.y * deltaTime;
 
@@ -122,7 +145,8 @@ void Game::updateGame() {
 		mBallVel.y *= -1;
 	}
 
-	if (mBallPos.x >= 785 && mBallVel.x > 0.0f) {
+	float diffPaddle2 = abs(mBallPos.y - mPaddle2Pos.y);
+	if (diffPaddle2 <= 150/2.0f && mBallPos.x <= 785.0f && mBallPos.x >= 780.0f && mBallVel.x > 0.0f) {
 		mBallVel.x *= -1;
 	}
 
@@ -130,8 +154,6 @@ void Game::updateGame() {
 	if (diff <= 150 / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && mBallVel.x < 0.0f) {
 		mBallVel.x *= -1;
 	}
-
-
 }
 void Game::generateOutputs() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
@@ -150,11 +172,13 @@ void Game::generateOutputs() {
 	wall.y = 600 - 15;
 	SDL_RenderFillRect(renderer, &wall);
 
+	/*
 	wall.x = 800 - 15;
 	wall.y = 0;
 	wall.w = 15;
 	wall.h = 600;
 	SDL_RenderFillRect(renderer, &wall);
+	*/
 
 	SDL_Rect ball{
 		static_cast<int>(mBallPos.x - 15 / 2),
@@ -171,6 +195,14 @@ void Game::generateOutputs() {
 		150
 	};
 	SDL_RenderFillRect(renderer, &paddle);
+
+	SDL_Rect paddle2{
+		800 - 15,
+		static_cast<int>(mPaddle2Pos.y - 150 / 2),
+		15,
+		150
+	};
+	SDL_RenderFillRect(renderer, &paddle2);
 
 	SDL_RenderPresent(renderer);
 

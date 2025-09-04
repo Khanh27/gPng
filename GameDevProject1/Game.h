@@ -24,9 +24,11 @@ class Game {
 		SDL_Renderer* renderer;
 		bool isRunning;
 		Vector2 mPaddlePos;
+		Vector2 mPaddle2Pos;
 		Vector2 mBallPos;
 		Uint32 mTicksCount;
 		int mPaddleDir;
+		int mPaddle2Dir;
 		Vector2 mBallVel;
 
 };
