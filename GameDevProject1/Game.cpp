@@ -150,6 +150,16 @@ void Game::updateGame() {
 		mBallVel.x *= -1;
 	}
 
+	if (mBallPos.x > 785.0f && mBallVel.x > 0.0f) {
+		mBallPos.x = 400.0f;
+		mBallPos.y = 300.0f;
+	}
+
+	if (mBallPos.x < 20.0f && mBallVel.x < 0.0f) {
+		mBallPos.x = 400.0f;
+		mBallPos.y = 300.0f;
+	}
+
 	float diff = abs(mBallPos.y - mPaddlePos.y);
 	if (diff <= 150 / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && mBallVel.x < 0.0f) {
 		mBallVel.x *= -1;
