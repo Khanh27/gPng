@@ -30,5 +30,9 @@ class Game {
 		int mPaddleDir;
 		int mPaddle2Dir;
 		Vector2 mBallVel;
+		int combo;
+		int comboMilestone;
+		float speedMultiplier;
+		Vector2 initialBallVel;
 
 };

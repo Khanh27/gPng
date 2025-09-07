@@ -12,6 +12,10 @@ Game::Game()
 	, mTicksCount(0)
 	, mPaddleDir(0)
 	, mPaddle2Dir(0)
+	, combo (8) //make sure to reset
+	, comboMilestone(0)
+	, speedMultiplier(1.0f)
+	, initialBallVel({ -200.0f, 235.0f })
 	, mBallVel({ -200.0f, 235.0f })
 	{
 	}
@@ -101,6 +105,7 @@ void Game::processInputs() {
 	}
 }
 void Game::updateGame() {
+	std::cout << combo << std::endl;
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 
@@ -148,21 +153,40 @@ void Game::updateGame() {
 	float diffPaddle2 = abs(mBallPos.y - mPaddle2Pos.y);
 	if (diffPaddle2 <= 150/2.0f && mBallPos.x <= 785.0f && mBallPos.x >= 780.0f && mBallVel.x > 0.0f) {
 		mBallVel.x *= -1;
-	}
-
-	if (mBallPos.x > 785.0f && mBallVel.x > 0.0f) {
-		mBallPos.x = 400.0f;
-		mBallPos.y = 300.0f;
-	}
-
-	if (mBallPos.x < 20.0f && mBallVel.x < 0.0f) {
-		mBallPos.x = 400.0f;
-		mBallPos.y = 300.0f;
+		combo += 1;
 	}
 
 	float diff = abs(mBallPos.y - mPaddlePos.y);
 	if (diff <= 150 / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && mBallVel.x < 0.0f) {
 		mBallVel.x *= -1;
+		combo += 1;
+	}
+
+	if (combo > 0 && combo % 10 == 0 && combo != comboMilestone) {
+		comboMilestone = combo;
+		speedMultiplier += 0.5f;
+
+		//float len = sqrt(mBallVel.x * mBallVel.x + mBallVel.y * mBallVel.y);
+		mBallVel.x = mBallVel.x * speedMultiplier;
+		mBallVel.y = mBallVel.y * speedMultiplier;
+	}
+
+	if (mBallPos.x > 785.0f && mBallVel.x > 0.0f) {
+		mBallPos.x = 400.0f;
+		mBallPos.y = 300.0f;
+		combo = 0;
+		comboMilestone = 0;
+		speedMultiplier = 1.0f;
+		mBallVel = initialBallVel;
+	}
+
+	if (mBallPos.x < 20.0f && mBallVel.x < 0.0f) {
+		mBallPos.x = 400.0f;
+		mBallPos.y = 300.0f;
+		combo = 0;
+		comboMilestone = 0;
+		speedMultiplier = 1.0f;
+		mBallVel = initialBallVel;
 	}
 }
 void Game::generateOutputs() {
