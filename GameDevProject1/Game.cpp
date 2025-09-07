@@ -12,7 +12,7 @@ Game::Game()
 	, mTicksCount(0)
 	, mPaddleDir(0)
 	, mPaddle2Dir(0)
-	, combo (8) //make sure to reset
+	, combo (0) //make sure to reset
 	, comboMilestone(0)
 	, speedMultiplier(1.0f)
 	, initialBallVel({ -200.0f, 235.0f })
@@ -214,6 +214,10 @@ void Game::generateOutputs() {
 	SDL_RenderFillRect(renderer, &wall);
 	*/
 
+	if (combo >= 10) {
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	}
+
 	SDL_Rect ball{
 		static_cast<int>(mBallPos.x - 15 / 2),
 		static_cast<int>(mBallPos.y - 15 / 2),
@@ -221,6 +225,8 @@ void Game::generateOutputs() {
 		15
 	};
 	SDL_RenderFillRect(renderer, &ball);
+
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 	SDL_Rect paddle{
 		0,
